@@ -1,0 +1,3 @@
+#async-postprocess=org.apache.dubbo.dubbosamplesprovider.aysnc.asyncoriginalfuture.filter.AsyncPostprocessFilter #可以与NormalSyncFilter结合使用观察异步调用与同步调用的区别。
+#legacy-block=org.apache.dubbo.dubbosamplesprovider.aysnc.asyncoriginalfuture.filter.LegacyBlockFilter
+#legacy-listenable=org.apache.dubbo.dubbosamplesprovider.aysnc.asyncoriginalfuture.filter.LegacyListenableFilter

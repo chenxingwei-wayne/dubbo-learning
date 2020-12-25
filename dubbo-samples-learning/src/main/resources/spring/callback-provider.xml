@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder/>
+    <dubbo:application name="callback-provider">
+    </dubbo:application>
+    <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:2181"/>
+
+    <dubbo:protocol name="dubbo" port="20880"/>
+    <bean id="callback"
+          class="org.apache.dubbo.dubbosamplesprovider.callback.impl.CallbackServiceImpl"/>
+    <!--callbacks配置成1000，为啥有待进一步挖掘。看了下源码是每个链接的回调的实例数限制。-->
+    <dubbo:service interface="org.apache.dubbo.dubbosamplesprovider.callback.api.CallbackService"
+                   ref="callback"
+                   connections="1" callbacks="1000">
+
+        <dubbo:method name="addListener">
+            <dubbo:argument index="1" callback="true"></dubbo:argument>
+        </dubbo:method>
+    </dubbo:service>
+</beans>
